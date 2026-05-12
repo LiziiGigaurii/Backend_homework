@@ -109,6 +109,6 @@ console.log(arr.flat(2))
 
 let fruits = ["apple", "banana", "orange", "kiwi"]
 fruits.splice(1, 1)
-fruits.splice(1, 0"mango")
+fruits.splice(1, 0,"mango")
 
 console.log(fruits)
