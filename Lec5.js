@@ -30,6 +30,21 @@ function guessNumber(num) {
 
 guessNumber(4)
 
+/* or */
+
+function randomCompare(n) {
+    let interval = setInterval(() => {
+        let random = Math.floor(Math.random() * 11)
+        console.log(random)
+        if(n === random){
+            clearInterval(interval)
+            console.log("დაემთხვა და გაჩერდა ფუნქცია")
+        }
+    },500)
+}
+
+randomCompare(5)
+
 
 
 // 3.და წერე ფუქნცია რომელიც მიიღებს n და callback-ს როცა n > 27-ზე გაუშვი ეს callback-ი 
