@@ -1,51 +1,70 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Product {
-  _id: string
-  name: string
-  price: number
-  category: string
-  description: string
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  description: string;
 }
 
 interface ProductForm {
-  name: string
-  price: string
-  category: string
-  description: string
+  name: string;
+  price: string;
+  category: string;
+  description: string;
 }
 
-const API_URL = "http://localhost:3001/products"
-
 export default function Home() {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[]>([]);
   const [form, setForm] = useState<ProductForm>({
     name: "",
     price: "",
     category: "",
     description: "",
-  })
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  });
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  async function fetchProducts() {
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/products");
+        if (isMounted) {
+          setProducts(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  async function refetchProducts() {
     try {
-      const res = await axios.get(API_URL)
-      setProducts(res.data)
+      const res = await axios.get("http://localhost:3001/products");
+      setProducts(res.data);
     } catch (error) {
-      console.log(error, "fetch products error")
+      console.log(error);
     }
   }
 
   function onInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function resetForm() {
@@ -54,61 +73,57 @@ export default function Home() {
       price: "",
       category: "",
       description: "",
-    })
-    setEditingId(null)
+    });
+    setEditingId(null);
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     const payload = {
       name: form.name.trim(),
       price: Number(form.price),
       category: form.category.trim(),
       description: form.description.trim(),
-    }
+    };
 
     try {
       if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, payload)
+        await axios.put(`http://localhost:3001/products/${editingId}`, payload);
       } else {
-        await axios.post(API_URL, payload)
+        await axios.post("http://localhost:3001/products", payload);
       }
-      await fetchProducts()
-      resetForm()
+      await refetchProducts();
+      resetForm();
     } catch (error) {
-      console.log(error, "submit error")
+      console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   function startEdit(product: Product) {
-    setEditingId(product._id)
+    setEditingId(product._id);
     setForm({
       name: product.name,
       price: String(product.price),
       category: product.category,
       description: product.description,
-    })
+    });
   }
 
   async function deleteProduct(id: string) {
     try {
-      await axios.delete(`${API_URL}/${id}`)
+      await axios.delete(`http://localhost:3001/products/${id}`);
       if (editingId === id) {
-        resetForm()
+        resetForm();
       }
-      await fetchProducts()
+      await refetchProducts();
     } catch (error) {
-      console.log(error, "delete error")
+      console.log(error);
     }
   }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
 
   return (
     <main className="mx-auto w-full max-w-3xl p-6">
