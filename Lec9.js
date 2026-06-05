@@ -76,3 +76,28 @@ for (let count in counts) {
 
 console.log(frequentNum)
 
+
+
+// 6)დაწერე ფუქნცია რომელიც დაითვლის რამდენი ლუწი და რამდენი კენტი რიცხვია
+function evenAndOddCounter(numsArr) {
+    let counter = numsArr.reduce((total,curr) => {
+        if (curr % 2 === 0) {
+            total["Even"] += 1
+        } else {
+            total["Odd"] += 1
+        }
+        return total
+    },{"Even": 0, "Odd": 0})
+    return counter
+}
+console.log(evenAndOddCounter([1, 2, 3, 4, 5, 6, 7, 8] ))
+
+
+
+// 7)დაწერე ფუქნცია როემლიც დააბრუენბს ყველაზე პატარა რიცხვს
+function smallestNum(numsArr) {
+    let minNum =  numsArr.sort((a,b) => a-b)[0]
+    return minNum
+}
+
+console.log(smallestNum([10, 2, 33, 5, 7]))
