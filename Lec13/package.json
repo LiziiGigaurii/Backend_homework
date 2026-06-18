@@ -1,0 +1,20 @@
+{
+  "name": "Lec13",
+  "version": "1.0.0",
+  "main": "main.js",
+  "bin": {
+    "backend-cli": "main.js"
+  },
+  "scripts": {
+    "start": "node --watch main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.18.0",
+    "commander": "^15.0.0"
+  }
+}
