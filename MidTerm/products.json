@@ -7,18 +7,27 @@
     "category": "tech"
   },
   {
-    "id": 2,
-    "name": "iPhone",
-    "description": "iphone 17",
-    "date": "2026",
-    "category": "tech"
-  },
-  {
     "id": 3,
     "name": "milk",
     "description": "just milk",
     "date": "2024",
     "category": "food",
     "expired": "expired"
+  },
+  {
+    "id": 4,
+    "name": "pizza",
+    "description": "italian",
+    "date": "2023",
+    "category": "food",
+    "expired": "expired"
+  },
+  {
+    "id": 5,
+    "name": "carbonara",
+    "description": "italiuri",
+    "date": "2027",
+    "category": "food",
+    "expired": "not expired"
   }
 ]

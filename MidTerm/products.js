@@ -29,63 +29,80 @@ program
 
 
 program
-.command("show")
-.description("Show all products or by ID")
-.option('--id <num>')
-.action(async (option) => {
-    const readProductsJson = await fs.readFile("products.json", 'utf-8')
-    const parsedProductsJson = JSON.parse(readProductsJson)
-    const id = option.id
+    .command("show")
+    .description("Show all products or by ID")
+    .option('--id <num>')
+    .action(async (option) => {
+        const readProductsJson = await fs.readFile("products.json", 'utf-8')
+        const parsedProductsJson = JSON.parse(readProductsJson)
+        const id = option.id
 
-    if (id) {
-        let product = parsedProductsJson.find(el => el.id === Number(id))
-        console.log(product || "product not found")
-    } else {
-        console.log(parsedProductsJson)
-    }
-})
+        if (id) {
+            let product = parsedProductsJson.find(el => el.id === Number(id))
+            console.log(product || "product not found")
+        } else {
+            console.log(parsedProductsJson)
+        }
+    })
+
+
+program
+    .command("update")
+    .description("Update your products")
+    .argument("<id>")
+    .option("--name <name>")
+    .option("--desc <description>")
+    .option("--date <date>")
+    .option("--category <category>")
+    .option("--isexpire")
+    .action(async (id, option) => {
+        const readProductsJson = await fs.readFile("products.json", "utf-8")
+        const parsedProductsJson = JSON.parse(readProductsJson)
+
+        const productIndex = parsedProductsJson.findIndex((el) => el.id === Number(id))
+        const oldProduct = parsedProductsJson[productIndex]
+
+        let updatedProduct = {
+            id: oldProduct.id,
+            name: option.name || oldProduct.name,
+            description: option.desc || oldProduct.description,
+            date: option.date || oldProduct.date,
+            category: option.category || oldProduct.category,
+            expired: oldProduct.expired
+        }
+
+        if (option.isexpire) {
+            const now = new Date()
+            const productDate = new Date(updatedProduct.date)
+
+            if (productDate < now) {
+                updatedProduct.expired = "expired"
+            } else {
+                updatedProduct.expired = "not expired"
+            }
+        }
+
+        parsedProductsJson[productIndex] = updatedProduct
+
+        await fs.writeFile("products.json",JSON.stringify(parsedProductsJson, null, 2))
+        console.log("Update successfully completed")
+    })
 
 
 
 program
-.command("update")
-.description("update your products")
-.argument("id")
-.option("--name <name>")
-.option("--desc <description>")
-.option("--date <date>")
-.option("--category <category>")
-.option("--isexpire")
-.action(async (id, option) => {
-    const readProductsJson = await fs.readFile("products.json", 'utf-8')
-    const parsedProductsJson = JSON.parse(readProductsJson)
-    const productIndex = parsedProductsJson.findIndex(el => el.id === Number(id))
-    const oldProduct = parsedProductsJson[productIndex]
-    const expired = option.isexpire
-    let updatedProduct = {
-        id: oldProduct.id,
-        name: option.name || oldProduct.name,
-        description: option.description || oldProduct.description,
-        date: option.date || oldProduct.date,
-        category: option.category || oldProduct.category,
-    }
+    .command("delete")
+    .description("Delete a product")
+    .argument("<id>")
+    .action(async (id) => {
+        const readProductsJson = await fs.readFile("products.json", "utf-8")
+        const parsedProductsJson = JSON.parse(readProductsJson)
 
-    if (expired) {
-        const now = new Date()
-        const productDate = new Date(updatedProduct.date)
-        if (productDate < now) {
-            updatedProduct.expired = "expired"
-        } else {
-            updatedProduct.expired = "not expired"
-  }
-    }
+        const productIndex = parsedProductsJson.findIndex((el) => el.id === Number(id))
+        parsedProductsJson.splice(productIndex, 1)
 
-    parsedProductsJson[productIndex] = updatedProduct
-    await fs.writeFile("products.json", JSON.stringify(parsedProductsJson, null, 2))
-    console.log("update successfully completed")
-})
-
-
-
+        await fs.writeFile("products.json",JSON.stringify(parsedProductsJson, null, 2))
+        console.log("Product deleted successfully")
+    })
 
 program.parse()
