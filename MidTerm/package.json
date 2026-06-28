@@ -1,0 +1,22 @@
+{
+  "name": "midterm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "bin":  {
+    "midTerm-cli": "main.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node --watch main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "express": "^5.2.1",
+    "module": "^2.0.0"
+  }
+}
