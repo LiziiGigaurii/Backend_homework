@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "bin":  {
-    "midTerm-cli": "main.js"
+    "midTerm-cli": "main.js",
+    "products-cli": "products.js"
   },
   "type": "module",
   "scripts": {

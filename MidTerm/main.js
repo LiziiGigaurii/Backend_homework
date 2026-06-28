@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { toCapital, checkPalindrom, biggestWord } from "./utils/helper.js"
 
 /*console.log(toCapital("Hello World"))

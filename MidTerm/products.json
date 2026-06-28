@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "Computer",
+    "description": "new",
+    "date": "2025",
+    "category": "tech"
+  },
+  {
+    "id": 2,
+    "name": "iPhone",
+    "description": "iphone 17",
+    "date": "2026",
+    "category": "tech"
+  },
+  {
+    "id": 3,
+    "name": "milk",
+    "description": "just milk",
+    "date": "2024",
+    "category": "food",
+    "expired": "expired"
+  }
+]
