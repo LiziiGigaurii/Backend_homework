@@ -1,7 +1,11 @@
 const express = require("express")
-const cors = require("cors")
+const apiRouter = require("./api/api")
 const app = express()
-const PORT = 5050
-
-app.use(cors())
+const PORT = 3030
 app.use(express.json())
+
+app.use("/api", apiRouter)
+
+app.listen(PORT, () => {
+    console.log(`Service running on http://localhost:${PORT}`)
+})
