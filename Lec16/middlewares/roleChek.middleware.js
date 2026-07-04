@@ -1,10 +1,10 @@
 const isAdmin = (req, res, next) => {
     const admin = req.headers.admin
     if (!admin || admin !== "admin") {
-        return res.status(400).json({message: "You don't have admin permissions"})
+        return res.status(400).json({ message: "You don't have admin permissions" })
     }
-    next()
-}
+    next();
+};
 
 const isAdminOrEditor = (req, res, next) => {
     const admin = req.headers.admin

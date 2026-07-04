@@ -39,7 +39,7 @@ const createOrder = (req, res) => {
         productName,
         quantity,
         totalPrice,
-        status
+        status: "Ordered"
     }
     orders.push(newOrder)
     res.json({message: "order added successfully", data:orders})
@@ -87,8 +87,6 @@ const Secret = (req, res) => {
     }
     res.json({message: "Welcome to the secret route!"})
 }
-
-
 
 
 module.exports = { pagination,getByIdOrder,createOrder,updateOrder,deleteOrder,Secret }

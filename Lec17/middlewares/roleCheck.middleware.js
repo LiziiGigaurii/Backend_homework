@@ -22,4 +22,14 @@ const isAdminOrEditor = (req, res, next) => {
     return res.status(400).json({message: "You don't have permission to update"})
 }
 
-module.exports = { isAdmin, isAdminOrEditor }
+const logger = (req, res, next) => {
+    const method = req.method;
+    const url = req.url;
+    const time = new Date().toISOString()
+    
+    console.log(`method: ${method}, url: ${url}, time: ${time}`)
+    next()
+}
+
+
+module.exports = { isAdmin, isAdminOrEditor, logger }
