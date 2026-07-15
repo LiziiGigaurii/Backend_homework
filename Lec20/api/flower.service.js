@@ -10,8 +10,11 @@ const findAllFlowers = async (req, res) => {
 
 const createFlower = async (req, res) => {
     const {name, color, price} = req.body
-    if (!name || !color || !price) {
+    if (!name || !color || price === undefined) {
         return res.json({message: "All fields are required"})
+    }
+    if (typeof price !== 'number' || price <= 0) {
+        return res.json({message: "Price must be a positive number"})
     }
     const createFlower = await flowerModel.create({name,color,price})
     res.json({message: "Flower added successfully!", data:createFlower})
@@ -37,6 +40,9 @@ const deleteFlower = async (req, res) => {
         return res.json({message: "Invalid Id", data:null})
     }
     const deletedFlower = await flowerModel.findByIdAndDelete(id)
+    if (!deletedFlower) {
+        return res.json({message: "Flower not found, nothing to delete"})
+    }
     res.json({message: "Flower deleted successfully!", data:deletedFlower})
 }
 
@@ -47,7 +53,13 @@ const updateFlower = async (req, res) => {
     if (!isValidObjectId(id)) {
         return res.json({message: "Invalid Id", data:null})
     }
+    if (price !== undefined && (typeof price !== 'number' || price <= 0)) {
+        return res.json({message: "Price must be a positive number"})
+    }
     const findFlowerAndUpdate = await flowerModel.findByIdAndUpdate(id, {name,color,price}, {new:true})
+    if (!findFlowerAndUpdate) {
+        return res.json({message: "Flower not found, update failed"})
+    }
     res.json({message: "Flower updated successfully!", data:findFlowerAndUpdate})
 }
 
