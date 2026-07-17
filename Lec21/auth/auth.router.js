@@ -30,13 +30,13 @@ authRouter.post("/sign-in", async (req,res) => {
     const {username, password} = req.body
 
     if (!username || !password) {
-        res.json({message: "Username and password are required!"})
+        return res.json({message: "Username and password are required!"})
     }
 
     const existingUsername = await userModel.findOne({username:username})
 
     if (!existingUsername) {
-        return res.json({message: "Username already exists!"})
+        return res.json({message: "User not found!"})
     }   
 
     const isEqualPassword = await bcrypt.compare(password, existingUsername.password)
