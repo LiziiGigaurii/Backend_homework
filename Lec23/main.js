@@ -1,1 +1,1 @@
-// nela nela mivyvebi temebs da vcdilob avitviso (( axali rom aris miwirs 
+// nela nela mivyvebi temebs da vcdilob avitviso (( axali rom aris miwirs, avpushav male 
