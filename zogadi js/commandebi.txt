@@ -1,0 +1,12 @@
+(Lec22) fullstack typescript:
+
+npx create-next-app .
+npm run dev
+
+
+(Lec23) nest.js: 
+
+nest new Lec23
+npm i -g @nestjs/cli
+nest
+npm run start:dev
