@@ -9,7 +9,7 @@ export class ProductController {
   getAllProducts(
     @Query() query,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('limit', new DefaultValuePipe(3), ParseIntPipe) limit: number,
   ) {
     return this.productService.getAll(query, page, limit)
   }

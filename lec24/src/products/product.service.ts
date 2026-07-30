@@ -29,20 +29,21 @@ export class ProductService {
       data = data.filter((el) => el.description === description);
     }
 
-    const total = data.length;
-    const lastPage = Math.max(Math.ceil(total / limit), 1);
-    const start = (page - 1) * limit;
-    const paginated = data.slice(start, start + limit);
+    // const total = data.length;
+    // const lastPage = Math.max(Math.ceil(total / limit), 1);
+    // const start = (page - 1) * limit;
+    // const paginated = data.slice(start, start + limit);
 
-    return {
-      data: paginated,
-      meta: {
-        total,
-        page,
-        limit,
-        lastPage
-      }
-    };
+    // return {
+    //   data: paginated,
+    //   meta: {
+    //     total,
+    //     page,
+    //     limit,
+    //     lastPage
+    //   }
+    // };
+    return data
   }
 
   getById(id: number) {
