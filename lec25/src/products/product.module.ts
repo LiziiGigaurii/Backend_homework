@@ -12,8 +12,24 @@ import { expressMiddleware } from '../../middleware/express.middleware';
 
 export class ProductModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
+        // eskide logavs
         consumer
-            .apply(expressMiddleware, UserAgent, RoleMiddleware)
-            .forRoutes({ path: 'products*', method: RequestMethod.ALL })
+            .apply(expressMiddleware)
+            .forRoutes(productsController)
+ 
+        // es browsers blokavs
+        consumer
+            .apply(UserAgent)
+            .forRoutes(productsController)
+ 
+        // es rols amowmebs
+        consumer
+            .apply(RoleMiddleware)
+            .forRoutes(
+                { path: 'products', method: RequestMethod.POST },
+                { path: 'products/:id', method: RequestMethod.PATCH },
+                { path: 'products/:id', method: RequestMethod.DELETE },
+            )
     }
 }
+ 
