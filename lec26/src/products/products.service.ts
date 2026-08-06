@@ -37,7 +37,7 @@ export class ProductsService {
     let newProduct = {
       id: lastID + 1,
       title: createProductDto.title,
-      description: createProductDto.description,
+      description: createProductDto.description ?? '',
       price: createProductDto.price,
       stock: createProductDto.stock,
       category: createProductDto.category
