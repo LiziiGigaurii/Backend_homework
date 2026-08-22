@@ -54,4 +54,10 @@ export class UsersService {
     }
     return deleteUser
   }
+
+  async addPost(userId, postId) {
+    const updateUser = await this.userModel.findByIdAndUpdate(userId, {$push:{posts:postId}})
+    return updateUser
+  }
+
 }
