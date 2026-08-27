@@ -1,0 +1,18 @@
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { isValidObjectId } from 'mongoose';
+import { Observable } from 'rxjs';
+
+// Reads the owner's user id from the "user-id" request header and
+// validates it before letting the request reach the controller.
+@Injectable()
+export class HasUserIdGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const userId = request.headers['user-id'];
+    if (!userId || !isValidObjectId(userId)) {
+      throw new BadRequestException('Valid "user-id" header is required');
+    }
+    request.userId = userId;
+    return true;
+  }
+}

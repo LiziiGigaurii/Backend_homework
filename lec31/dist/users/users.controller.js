@@ -26,16 +26,16 @@ let UsersController = class UsersController {
         return this.usersService.create(createUserDto);
     }
     findAll() {
-        return this.usersService.findAll();
+        return this.usersService.findAll().populate({ path: 'products', select: '-user' });
     }
     findOne(id) {
-        return this.usersService.findOne(+id);
+        return this.usersService.findOne(id);
     }
     update(id, updateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+        return this.usersService.update(id, updateUserDto);
     }
     remove(id) {
-        return this.usersService.remove(+id);
+        return this.usersService.remove(id);
     }
 };
 exports.UsersController = UsersController;
