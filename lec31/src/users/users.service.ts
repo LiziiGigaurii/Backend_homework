@@ -48,8 +48,6 @@ export class UsersService {
     return deletedUser;
   }
 
-  // Called from ProductsService whenever a new product is created for this user,
-  // so the User document keeps a list of its own product IDs (one-to-many).
   async addProduct(userId: Types.ObjectId, productId: Types.ObjectId) {
     const updatedUser = await this.userModel.findByIdAndUpdate(userId, {
       $push: { products: productId },

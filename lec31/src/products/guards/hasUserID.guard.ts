@@ -2,8 +2,6 @@ import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '
 import { isValidObjectId } from 'mongoose';
 import { Observable } from 'rxjs';
 
-// Reads the owner's user id from the "user-id" request header and
-// validates it before letting the request reach the controller.
 @Injectable()
 export class HasUserIdGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {

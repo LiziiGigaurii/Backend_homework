@@ -21,7 +21,6 @@ export class ProductsController {
     return this.productsService.findAll().populate({ path: 'user' });
   }
 
-  // GET /products/user/:userId -> all products of one user (one-to-many demo)
   @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
     return this.productsService.findByUser(userId);

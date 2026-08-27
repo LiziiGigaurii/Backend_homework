@@ -26,7 +26,6 @@ export class ProductsService {
     return this.productModel.find();
   }
 
-  // All products belonging to one user (demonstrates the one-to-many relation)
   findByUser(userId: string) {
     if (!isValidObjectId(userId)) throw new BadRequestException('Invalid id');
     return this.productModel.find({ user: new Types.ObjectId(userId) });
