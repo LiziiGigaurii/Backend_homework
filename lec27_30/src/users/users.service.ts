@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   async findAll() {
-    return this.userModel.find()
+    return this.userModel.find().populate({ path: "posts", select: "-user" })
   }
 
   async findOne(id: string) {

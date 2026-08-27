@@ -4,7 +4,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post } from './schema/post.schema';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class PostsService {
@@ -12,7 +12,7 @@ export class PostsService {
 
   async create(userId: string, createPostDto: CreatePostDto) {
     const user = await this.userService.findOne(userId)
-    const newPost = await this.postsModel.create({ ..createPostDto, user: user._id })
+    const newPost = await this.postsModel.create({ ...createPostDto, user: user._id })
     await this.userService.addPost(user._id, newPost._id)
     return newPost
   }

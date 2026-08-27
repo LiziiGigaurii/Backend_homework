@@ -11,7 +11,7 @@ export class PostsController {
 
   @UseGuards(HasUserIdGuard)
   @Post()
-  create(@Req request, @Body() createPostDto: CreatePostDto) {
+  create(@Req() request, @Body() createPostDto: CreatePostDto) {
     const userId = request.userId
     return this.postsService.create(userId, createPostDto);
   }
