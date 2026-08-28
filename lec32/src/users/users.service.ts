@@ -22,7 +22,7 @@ export class UsersService {
       this.logger.info({ email: createUserDto.email }, 'User creation failed: email already exists');
       throw new BadRequestException()
     }
-      const createUser  = await this.userModel.create(createUserDto)
+    const createUser  = await this.userModel.create(createUserDto)
     this.logger.info({ email: createUserDto.email, userId: createUser._id }, 'User created');
     return createUser
   }

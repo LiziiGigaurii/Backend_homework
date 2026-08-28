@@ -1,5 +1,5 @@
 
-import { Injectable, CanActivate, ExecutionContext, BadRequestException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import {JwtService} from "@nestjs/jwt"
 
 @Injectable()
@@ -10,12 +10,12 @@ constructor (private jwtService:JwtService){}
     const request = context.switchToHttp().getRequest()
     const token = this.getToken(request.headers)
 
-    if (!token) throw new BadRequestException()
+    if (!token) throw new UnauthorizedException()
         try {
             const payLoad = this.jwtService.verify(token)
             request.userId = payLoad.userId
         } catch (error) {
-            throw new BadRequestException()
+            throw new UnauthorizedException()
         }
     return true
   }
