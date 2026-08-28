@@ -7,21 +7,24 @@ import { isValidObjectId, Model } from 'mongoose';
 import { PinoLogger } from 'nestjs-pino';
 
 @Injectable()
+
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel:Model<User>,
     private readonly logger: PinoLogger,
-  ){
+  )
+  {
     this.logger.setContext(UsersService.name);
   }
 
- async create(createUserDto: CreateUserDto) {
-    this.logger.info({ email: createUserDto.email }, 'Creating user');
+ async create(createUserDto: CreateUserDto) {this.logger.info({ email: createUserDto.email }, 'Creating user');
     const exsisitingUser = await this.userModel.findOne({email:createUserDto.email})
+
     if(exsisitingUser) {
       this.logger.info({ email: createUserDto.email }, 'User creation failed: email already exists');
       throw new BadRequestException()
     }
+
     const createUser  = await this.userModel.create(createUserDto)
     this.logger.info({ email: createUserDto.email, userId: createUser._id }, 'User created');
     return createUser
@@ -33,18 +36,26 @@ export class UsersService {
   }
 
 async  findOne(id: string) {
+
   if(!isValidObjectId(id)) throw new BadRequestException("invalid mongo (id)")
+
     const findUser = await this.userModel.findById(id)
+
   if(!findUser) throw new NotFoundException("user not found")
+
     this.logger.info({ userId: id }, 'User found');
     return findUser
   }
 
  async update(id: string, updateUserDto: UpdateUserDto) {
   this.logger.info({ userId: id }, 'Updating user');
+
   if(!isValidObjectId(id)) throw new BadRequestException("invalid mongo (id)")
-    const updateUser = await this.userModel.findByIdAndUpdate(id,updateUserDto,{new:true})
+
+  const updateUser = await this.userModel.findByIdAndUpdate(id,updateUserDto,{new:true})
+
   if(!updateUser) throw new NotFoundException()
+
     this.logger.info({ userId: id }, 'User updated');
     return updateUser
   }

@@ -7,11 +7,13 @@ import { isValidObjectId, Model } from 'mongoose';
 import { PinoLogger } from 'nestjs-pino';
 
 @Injectable()
+
 export class ProductsService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<Product>,
     private readonly logger: PinoLogger,
-  ) {
+  ) 
+  {
     this.logger.setContext(ProductsService.name);
   }
 
@@ -34,27 +36,38 @@ export class ProductsService {
   }
 
   async findOne(id: string) {
-    if (!isValidObjectId(id)) throw new BadRequestException('invalid mongo (id)');
+    if (!isValidObjectId(id)) throw new BadRequestException('invalid mongo id');
+
     const product = await this.productModel.findById(id);
+
     if (!product) throw new NotFoundException('product not found');
     this.logger.info({ productId: id }, 'Product found');
+
     return product;
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     this.logger.info({ productId: id }, 'Updating product');
+
     if (!isValidObjectId(id)) throw new BadRequestException('invalid mongo (id)');
+
     const product = await this.productModel.findByIdAndUpdate(id, updateProductDto, { new: true });
+
     if (!product) throw new NotFoundException('product not found');
+
     this.logger.info({ productId: id }, 'Product updated');
     return product;
   }
 
   async remove(id: string) {
     this.logger.info({ productId: id }, 'Deleting product');
+
     if (!isValidObjectId(id)) throw new BadRequestException('invalid mongo (id)');
+
     const product = await this.productModel.findByIdAndDelete(id);
+    
     if (!product) throw new NotFoundException('product not found');
+    
     this.logger.info({ productId: id }, 'Product deleted');
     return product;
   }
